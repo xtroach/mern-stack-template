@@ -16,20 +16,16 @@ devBundle.compile(app)
 app.use('/dist', express.static(__dirname+'./../dist'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
-app.use(morgan('combined'))
+app.use(morgan('dev'))
 app.use(expressSession({
   resave: true,
   saveUninitialized: true,
   secret: config.cookieSecret,
-  maxAge: 30*1000,
   store:  new (RedisStore(expressSession))({
     client: redisClient,
     logErrors: true,  // highly recommended!
   }),
 }))
-
-
-
 
 
 
