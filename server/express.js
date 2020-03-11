@@ -1,10 +1,12 @@
 import express from 'express'
+import {redirectToHTTPS} from "express-http-to-https";
 import config from './../config/config'
 import redis from 'redis'
 import expressSession from 'express-session'
 import bodyParser from 'body-parser'
 import RedisStore from 'connect-redis'
 import template from './../pageTemplate'
+import qrHelper from './conntrollers/qrHelper'
 //require to fix buggy deprecation warning in the module
 const morgan = require('morgan')
 const redisClient = redis.createClient(config.redis)
@@ -12,6 +14,8 @@ const redisClient = redis.createClient(config.redis)
 const app = express()
 
 import devBundle from './devBundle'
+
+app.use(redirectToHTTPS(/localhost:3000/))
 devBundle.compile(app)
 app.use('/dist', express.static(__dirname+'./../dist'))
 app.use(bodyParser.json())
@@ -27,9 +31,9 @@ app.use(expressSession({
   }),
 }))
 
+app.get('/qr-login/', qrHelper.renderQR)
 
-
-app.use('*', async (req,res) => {
+app.use('/scanner', async (req,res) => {
   const html = template()
   res.send(html)
 })
