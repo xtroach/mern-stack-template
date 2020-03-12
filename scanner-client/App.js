@@ -3,12 +3,13 @@ import withStyles, {ThemeProvider} from 'react-jss'
 import themes from "./styles/themes"
 import Camera from "./core/Camera"
 import io from 'socket.io-client'
+import {hot} from "react-hot-loader/root";
 
 
 class App extends Component{
 
   scanCode(val) {
-    if (val.status == 'success') {
+    if (val.status === 'success') {
      this.socket.emit('my other event', val.code)
     }
     this.setState({scannedCode: val})
@@ -50,4 +51,4 @@ const styles= {
   }
 }
 
-export default withStyles(styles)(App)
+export default hot(withStyles(styles)(App))

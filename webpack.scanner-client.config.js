@@ -2,15 +2,15 @@ const path = require('path')
 const webpack = require('webpack')
 module.exports = {
   devtool: 'inline-source-map',
-  name: "client",
-  entry: ['./client/client.js',
+  name: "scanner-client",
+  entry: ['./scanner-client/client.js',
     'react-hot-loader/patch',
-    'webpack-hot-middleware/client?reload=true'
+    'webpack-hot-middleware/client'
   ],
   mode: 'development',
   output: {
      path: path.resolve(__dirname, './dist'),
-     filename: 'clientBundle.js',
+     filename: 'scannerClientBundle.js',
     publicPath: '/dist/',
 
   },

@@ -5,7 +5,8 @@ import redis from 'redis'
 import expressSession from 'express-session'
 import bodyParser from 'body-parser'
 import RedisStore from 'connect-redis'
-import template from './../pageTemplate'
+import scannerTemplate from '../scannerTemplate'
+import browserTemplate from '../browserTemplate'
 import qrHelper from './conntrollers/qrHelper'
 //require to fix buggy deprecation warning in the module
 const morgan = require('morgan')
@@ -31,11 +32,18 @@ app.use(expressSession({
   }),
 }))
 
+
 app.get('/qr-login/', qrHelper.renderQR)
 
 app.use('/scanner', async (req,res) => {
-  const html = template()
+  const html = scannerTemplate()
   res.send(html)
+})
+
+app.get('*', (req,res) => {
+  const html = browserTemplate()
+  res.send(html)
+
 })
 
 

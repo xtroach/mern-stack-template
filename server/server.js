@@ -4,7 +4,7 @@ import redirect from "./express-htttps-redirector";
 import mongoose from 'mongoose'
 import https from 'https'
 import http from 'http'
-import socketIO from 'socket.io'
+import sockets from './conntrollers/ioCtrl'
 const fs = require('fs')
 
 //...
@@ -25,7 +25,7 @@ http.createServer({}, redirect).listen(config.http_port, (err)=>{
   console.info('Http-Server started on port %s', config.http_port)
 })
 const httpsServer = https.createServer({key: fs.readFileSync('server.key'), cert: fs.readFileSync('server.cert')}, app)
-const io = socketIO(httpsServer)
+const io = sockets(httpsServer)
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('my other event', function (data) {
