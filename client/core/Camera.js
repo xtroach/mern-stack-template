@@ -30,6 +30,7 @@ class Camera extends Component{
 
     navigator.mediaDevices.getUserMedia(constraints)
       .then((stream)=> {
+
         this.video.current.srcObject = stream;
         this.video.current.play();
         this.videoEnabled = true;
@@ -74,31 +75,16 @@ class Camera extends Component{
   }
   render(){
     return (
-      <div>
-        <div className={this.props.classes.camera}>
-          <video className={this.props.classes.video} onCanPlay={this.canPlay} ref={this.video}>Video stream not available.</video>
-          <button className={this.props.classes.button} onClick={this.takePicture} ref={this.startButton}>{this.state.scanActionLabel&&this.state.scanActionLabel || "Scan Code"}</button>
-        </div>
-      </div>)
+      <video className={this.props.classes.video} onClick={this.takePicture} onCanPlay={this.canPlay} ref={this.video}>Video stream not available.</video>
+    )
   }
 }
 
 
 const styles = {
-
   video:{
     width: "100%",
   },
-  button:{
-    width: "100%",
-    height: 200,
-    fontSize: 60,
-    display: "block"
-  },
-  camera:{
-    paddingLeft: 10,
-    paddingRight: 10
-  }
 }
 
 
