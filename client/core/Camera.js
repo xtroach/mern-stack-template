@@ -16,7 +16,6 @@ class Camera extends Component{
     this.canPlay = this.canPlay.bind(this)
     this.takePicture = this.takePicture.bind(this)
     this.videoEnabled=false
-    this.state.scanActionLabel = this.props.scanActionLabel
   }
   componentDidMount() {
 
@@ -30,7 +29,6 @@ class Camera extends Component{
 
     navigator.mediaDevices.getUserMedia(constraints)
       .then((stream)=> {
-
         this.video.current.srcObject = stream;
         this.video.current.play();
         this.videoEnabled = true;
@@ -52,8 +50,7 @@ class Camera extends Component{
   takePicture(e){
 
     e.preventDefault()
-    this.setState({scanActionLabel: "scanning"})
-    this.props.callback("scanning..")
+    this.props.callback({status: "scanning"})
     const canvas = document.createElement('canvas')
     const context = canvas.getContext('2d')
     if (this.videoEnabled) {
@@ -63,14 +60,11 @@ class Camera extends Component{
       const imageData = context.getImageData(0,0, this.video.current.videoWidth, this.video.current.videoHeight);
       const code = jsQR(imageData.data, imageData.width, imageData.height)
       if (code){
-        console.log(code)
         if(this.props.callback)
-          this.props.callback(code.data)
-
+          this.props.callback({status: "success", code: code.data})
       }else{
-        this.props.callback("failed try again....")
+        this.props.callback({status: "failure"})
       }
-      this.setState({scanActionLabel: this.props.scanActionLabel || "Scan Code"})
     }
   }
   render(){

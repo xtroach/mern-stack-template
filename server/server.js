@@ -28,6 +28,9 @@ const httpsServer = https.createServer({key: fs.readFileSync('server.key'), cert
 const io = socketIO(httpsServer)
 io.on('connection', function(socket){
   console.log('a user connected');
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
 });
 
 httpsServer.listen(config.https_port, (err) => {
