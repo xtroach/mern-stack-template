@@ -21,7 +21,7 @@
     "express": "^4.17.1",
     "express-http-to-https": "^1.1.4",
     "express-session": "^1.17.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "jsqr": "^1.2.0",
     "jss": "^10.0.4",
     "jss-preset-default": "^10.0.4",
